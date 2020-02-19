@@ -1,0 +1,74 @@
+code->(sentence)+
+
+sentence->sm|euq|choose|loop|out|in|'break;'|'continue;'|'{' code '}'|';'
+
+sm->('int'|'float') ('[]'|'') ( id ';'|equ)
+
+euq->id '=' exp ';'
+
+choose->'if(' exp ')' sentence (('else' sentence )|'')
+
+loop->'while(' exp ')' sentence
+
+out->'print(' exp ');'
+
+in-> 'scanf(' id ');'
+
+exp-> add_sub exp'|'{' exp ( ',' exp)+ '}' | '{}'
+exp'-> ( ( '==' | '<>' | '>' | '<' ) | add_sub exp') |''
+
+add_sub-> mul_dil add_sub'
+add_sub'-> ( ( '+' | '-' ) mul_dil add_sub') |''
+
+mul_dil-> suanshu mul_dil'
+mul_dil'-> ( ( '*' | '/' ) suanshu mul_dil') |''
+
+suanshu->'(' exp ')' | item
+
+item-> number | id
+
+number->(('+'|'-'|'')num)
+
+id-> identify id'
+id'->'[' exp ']' | ''
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+first:
+    end:num identify symbol keyword
+    other:
+        id: identify 
+        id': [ ''
+        number: num { + - 
+        item: num { + - identify
+        suanshu: ( num { + - identify
+        mul_dil: ( num { + - identify
+        mul_dil': * / ''
+        add_sub: ( num { + - identify
+        add_sub': + - ''
+        exp: ( num { + - identify
+        exp': = == <> < > ''
+        loop: while
+        choose: if
+        equ: identify 
+        sm: int float
+        sentence: while if identify int float {
+        code: while if identify int float {
+            
+follow:
+    code: # while if identify int float {
+    sentence: # while if identify int float {
+    sm: # while if identify int float { 
